@@ -18,7 +18,20 @@ fun App(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     AppTheme(darkTheme = uiState.darkMode) {
+        val secondSnippet = Snippet(
+            title = "Second title",
+            description = "kached app sfvhndfvjdfv",
+            code = "hello world"
+        )
+        val firstSnippet = Snippet(
+            title = "First title",
+            description = "dfvbjdfnvsdmfkvknnb",
+            code = "fjvnjdfvnjmdfkvfvdv"
+        )
 
+
+        viewModel.removeSnippet(secondSnippet.title)
+        viewModel.removeSnippet(firstSnippet.title)
     }
 }
 

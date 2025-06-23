@@ -27,6 +27,14 @@ fun main() = application {
     ) {
         window.minimumSize = Dimension(800, 600)
 
+//        viewModel.addSnippet(
+//            Snippet(
+//                title = "First title",
+//                description = "dfvbjdfnvsdmfkvknnb",
+//                code = "fjvnjdfvnjmdfkvfvdv"
+//            )
+//        )
+
         AppTheme {
             App(
                 viewModel = viewModel
