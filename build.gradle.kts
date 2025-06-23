@@ -273,13 +273,13 @@ tasks.register("addStartupWMClassToDebDynamic") {
 set -e
 
 # summary of how this script can be called:
-#        * <postinst> `configure' <most-recently-configured-version>
-#        * <old-postinst> `abort-upgrade' <new version>
-#        * <conflictor's-postinst> `abort-remove' `in-favour' <package>
+#        * <postinst> `configure` <most-recently-configured-version>
+#        * <old-postinst> `abort-upgrade` <new version>
+#        * <conflictor's-postinst> `abort-remove` `in-favour` <package>
 #          <new-version>
-#        * <postinst> `abort-remove'
-#        * <deconfigured's-postinst> `abort-deconfigure' `in-favour'
-#          <failed-install-package> <version> `removing'
+#        * <postinst> `abort-remove`
+#        * <deconfigured's-postinst> `abort-deconfigure` `in-favour`
+#          <failed-install-package> <version> `removing`
 #          <conflicting-package> <version>
 # for details, see https://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
@@ -300,7 +300,7 @@ case "$1" in
     ;;
 
     *)
-        echo "postinst called with unknown argument `$1'" >&2
+        echo "postinst called with unknown argument `$1`" >&2
         exit 1
     ;;
 esac
@@ -322,12 +322,12 @@ exit 0"""
 set -e
 
 # summary of how this script can be called:
-#        * <prerm> `remove'
-#        * <old-prerm> `upgrade' <new-version>
-#        * <new-prerm> `failed-upgrade' <old-version>
-#        * <conflictor's-prerm> `remove' `in-favour' <package> <new-version>
-#        * <deconfigured's-prerm> `deconfigure' `in-favour'
-#          <package-being-installed> <version> `removing'
+#        * <prerm> `remove`
+#        * <old-prerm> `upgrade` <new-version>
+#        * <new-prerm> `failed-upgrade` <old-version>
+#        * <conflictor's-prerm> `remove` `in-favour` <package> <new-version>
+#        * <deconfigured's-prerm> `deconfigure` `in-favour`
+#          <package-being-installed> <version> `removing`
 #          <conflicting-package> <version>
 # for details, see https://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
@@ -348,7 +348,7 @@ case "$1" in
     ;;
 
     *)
-        echo "prerm called with unknown argument `$1'" >&2
+        echo "prerm called with unknown argument `$1`" >&2
         exit 1
     ;;
 esac
