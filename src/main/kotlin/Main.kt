@@ -9,6 +9,7 @@ import java.awt.Dimension
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.getKoin
 import kached.resources.*
+import moe.tlaster.precompose.ProvidePreComposeLocals
 
 
 fun main() = application {
@@ -27,18 +28,13 @@ fun main() = application {
     ) {
         window.minimumSize = Dimension(800, 600)
 
-//        viewModel.addSnippet(
-//            Snippet(
-//                title = "First title",
-//                description = "dfvbjdfnvsdmfkvknnb",
-//                code = "fjvnjdfvnjmdfkvfvdv"
-//            )
-//        )
-
         AppTheme {
-            App(
-                viewModel = viewModel
-            )
+            ProvidePreComposeLocals {
+                App(
+                    viewModel = viewModel
+                )
+            }
+
         }
     }
 }
