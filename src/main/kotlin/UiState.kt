@@ -1,4 +1,4 @@
 data class UiState(
     val darkMode: Boolean = false,
-    val isConverting: Boolean = false
+    val snippets: List<Snippet?> = emptyList()
 )
