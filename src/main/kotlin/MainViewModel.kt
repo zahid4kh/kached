@@ -3,6 +3,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
 
@@ -12,26 +13,23 @@ class MainViewModel(
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
-    private val _snippets = MutableStateFlow<List<Snippet>>(emptyList())
-    val snippets: StateFlow<List<Snippet>> = _snippets.asStateFlow()
-
-
     private val scope = viewModelScope
 
     init {
         scope.launch(Dispatchers.IO) {
             val settings = database.getSettings()
+            val loadedSnippets = database.getSnippets()
+
             _uiState.value = _uiState.value.copy(
                 darkMode = settings.darkMode,
+                snippets = loadedSnippets
             )
-            val loadedSnippets = database.getSnippets()
-            _snippets.value = loadedSnippets
         }
     }
 
     fun addSnippet(newSnippet: Snippet) {
-        val newSnippets = _snippets.value + newSnippet
-        _snippets.value = newSnippets
+        val newSnippets = _uiState.value.snippets + newSnippet
+        _uiState.value = _uiState.value.copy(snippets = newSnippets)
 
         scope.launch(Dispatchers.IO) {
             database.saveSnippets((newSnippets))
@@ -39,10 +37,13 @@ class MainViewModel(
     }
 
     fun removeSnippet(snippetTitleToRemove: String) {
-        val updatedSnippets = _snippets.value.filter{it.title != snippetTitleToRemove}
-        _snippets.value = updatedSnippets
-        scope.launch(Dispatchers.IO){
-            database.saveSnippets(updatedSnippets)
+        val updatedSnippets = _uiState.value.snippets.filter { it.title != snippetTitleToRemove }
+        _uiState.value = _uiState.value.copy(snippets = updatedSnippets)
+
+        scope.launch {
+            withContext(Dispatchers.IO) {
+                database.saveSnippets(updatedSnippets)
+            }
         }
     }
 
