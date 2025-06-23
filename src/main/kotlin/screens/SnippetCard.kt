@@ -15,6 +15,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,11 +29,10 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun SnippetCard(snippet: Snippet, onDelete: (String) -> Unit) {
-    Card(
+    OutlinedCard(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth().padding(horizontal = 20.dp)
             .clip(RoundedCornerShape(12.dp)),
-        elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Column(
@@ -77,7 +77,7 @@ fun SnippetCard(snippet: Snippet, onDelete: (String) -> Unit) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(8.dp))
-                        .background(MaterialTheme.colorScheme.background.copy(alpha = 0.5f))
+                        .background(MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.5f))
                         .padding(8.dp),
                     maxLines = 5,
                     overflow = TextOverflow.Ellipsis
