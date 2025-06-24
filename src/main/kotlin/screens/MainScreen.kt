@@ -13,6 +13,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material.icons.filled.ModeNight
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -33,7 +35,8 @@ import moe.tlaster.precompose.navigation.Navigator
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(navigator: Navigator, viewModel: MainViewModel) {
+fun MainScreen(navigator: Navigator, viewModel: MainViewModel, uiState: UiState) {
+    val isDark = uiState.darkMode
 
     Scaffold(
         topBar = {
@@ -41,7 +44,10 @@ fun MainScreen(navigator: Navigator, viewModel: MainViewModel) {
                 title = { Text("Kached") },
                 actions = {
                     IconButton(onClick = { viewModel.toggleDarkMode() }) {
-                        Icon(Icons.Default.Settings, contentDescription = "Toggle Dark Mode")
+                        Icon(
+                            imageVector = if(isDark) Icons.Default.ModeNight else Icons.Default.LightMode,
+                            contentDescription = "Toggle Dark Mode"
+                        )
                     }
                 }
             )

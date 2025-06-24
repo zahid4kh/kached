@@ -40,7 +40,7 @@ fun App(
             Surface {
                 NavHost(navigator = navigator, initialRoute = "/main") {
                     scene("/main") {
-                        MainScreen(navigator = navigator, viewModel = viewModel)
+                        MainScreen(navigator = navigator, viewModel = viewModel, uiState = uiState)
                     }
                     scene("/add_snippet") {
                         AddSnippetScreen(navigator = navigator, viewModel = viewModel)
