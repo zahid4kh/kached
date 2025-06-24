@@ -47,7 +47,7 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
                     .animateContentSize()
                     .padding(20.dp)
                     .padding(paddingValues),
-                columns = GridCells.Adaptive(500.dp),
+                columns = GridCells.Adaptive(400.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ){
