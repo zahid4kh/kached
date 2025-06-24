@@ -10,8 +10,6 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ContentCopy
-import androidx.compose.material.icons.filled.FileCopy
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -21,7 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import deskit.dialogs.InfoDialog
+import kached.resources.*
 import moe.tlaster.precompose.navigation.Navigator
+import org.jetbrains.compose.resources.painterResource
 import theme.getJetbrainsMonoFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -106,8 +106,8 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
                                     onClick = {viewModel.copyCodeAsPlainText(openedSnippet)}
                                 ){
                                     Icon(
-                                        Icons.Default.ContentCopy,
-                                        contentDescription = "Copy code"
+                                        painterResource(Res.drawable.copy),
+                                        contentDescription = "Copy code as plaintext"
                                     )
                                 }
                                 // copy as markdown codeblock
@@ -115,8 +115,8 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
                                     onClick = {viewModel.copyCodeAsMarkdown(openedSnippet)}
                                 ){
                                     Icon(
-                                        Icons.Default.FileCopy,
-                                        contentDescription = "Copy code"
+                                        painterResource(Res.drawable.square_m),
+                                        contentDescription = "Copy code as a markdown codeblock"
                                     )
                                 }
                             }
