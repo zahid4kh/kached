@@ -83,7 +83,7 @@ fun SnippetCard(snippet: Snippet, onDelete: (String) -> Unit, modifier: Modifier
                         .clip(RoundedCornerShape(8.dp))
                         .background(MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.5f))
                         .padding(8.dp),
-                    maxLines = 5,
+                    maxLines = 10,
                     overflow = TextOverflow.Ellipsis
                 )
             }
