@@ -75,6 +75,27 @@ class MainViewModel(
         }
     }
 
+    fun copyCodeAsMarkdown(snippet: Snippet){
+        val clipboard = Toolkit.getDefaultToolkit().systemClipboard
+        try {
+            val codeToCopy = snippet.code?:"Could not find code to copy for snippet with title '${snippet.title}'"
+            val finalMarkdownContent = """
+```kotlin
+$codeToCopy
+```
+            """.trimIndent()
+            clipboard.setContents(StringSelection(finalMarkdownContent), null)
+            _uiState.update { it.copy(codeCopied = true) }
+        }catch (e: IllegalStateException){
+            _uiState.update { it.copy(codeCopied = false) }
+            e.printStackTrace()
+        }
+        scope.launch {
+            delay(1200)
+            _uiState.update { it.copy(codeCopied = null)}
+        }
+    }
+
     fun expandCodeField(){
         _uiState.value = _uiState.value.copy(
             linesOfVisibleCode = 55

@@ -11,6 +11,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material.icons.filled.FileCopy
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -96,15 +97,30 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
                                     modifier = Modifier.padding(12.dp)
                                 )
                             }
-                            IconButton(
-                                onClick = {viewModel.copyCodeAsPlainText(openedSnippet)},
-                                modifier = Modifier.align(Alignment.TopEnd)
-                            ){
-                                Icon(
-                                    Icons.Default.ContentCopy,
-                                    contentDescription = "Copy code"
-                                )
+                            // copy icon buttons
+                            Row(modifier = Modifier.align(Alignment.TopEnd),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(5.dp)){
+                                // copy as plain-text
+                                IconButton(
+                                    onClick = {viewModel.copyCodeAsPlainText(openedSnippet)}
+                                ){
+                                    Icon(
+                                        Icons.Default.ContentCopy,
+                                        contentDescription = "Copy code"
+                                    )
+                                }
+                                // copy as markdown codeblock
+                                IconButton(
+                                    onClick = {viewModel.copyCodeAsMarkdown(openedSnippet)}
+                                ){
+                                    Icon(
+                                        Icons.Default.FileCopy,
+                                        contentDescription = "Copy code"
+                                    )
+                                }
                             }
+
                         }
                     }
                 )
