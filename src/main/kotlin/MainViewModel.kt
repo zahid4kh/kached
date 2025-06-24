@@ -47,6 +47,18 @@ class MainViewModel(
         }
     }
 
+    fun expandCodeField(){
+        _uiState.value = _uiState.value.copy(
+            linesOfVisibleCode = 55
+        )
+    }
+
+    fun collapseCodeField(){
+        _uiState.value = _uiState.value.copy(
+            linesOfVisibleCode = 20
+        )
+    }
+
     fun toggleDarkMode() {
         val newDarkMode = !_uiState.value.darkMode
         _uiState.value = _uiState.value.copy(darkMode = newDarkMode)
