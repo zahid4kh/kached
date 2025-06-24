@@ -10,25 +10,18 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import deskit.dialogs.ConfirmationDialog
 import deskit.dialogs.InfoDialog
 import moe.tlaster.precompose.navigation.Navigator
 import theme.getJetbrainsMonoFamily
-import kotlin.collections.mutableListOf
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -82,12 +75,12 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
                     )
                 }
             }
-            uiState.expandedSnippet?.let{
+            uiState.expandedSnippet?.let{openedSnippet->
                 InfoDialog(
                     width = 1200.dp,
                     height = 1000.dp,
-                    title = it.title,
-                    message = it.description?:"",
+                    title = openedSnippet.title,
+                    message = openedSnippet.description?:"",
                     onClose = { viewModel.collapseSnippet() },
                     content = {
                         Box(modifier = Modifier
@@ -98,12 +91,20 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
                         ){
                             SelectionContainer {
                                 Text(
-                                    text = it.code?:"No code here",
+                                    text = openedSnippet.code?:"// No code here",
                                     fontFamily = getJetbrainsMonoFamily(),
                                     modifier = Modifier.padding(12.dp)
                                 )
                             }
-
+                            IconButton(
+                                onClick = {viewModel.copyCode(openedSnippet)},
+                                modifier = Modifier.align(Alignment.TopEnd)
+                            ){
+                                Icon(
+                                    Icons.Default.ContentCopy,
+                                    contentDescription = "Copy code"
+                                )
+                            }
                         }
                     }
                 )

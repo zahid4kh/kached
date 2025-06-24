@@ -1,4 +1,5 @@
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -7,6 +8,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
+import java.awt.Toolkit
+import java.awt.datatransfer.StringSelection
 
 class MainViewModel(
     private val database: Database,
@@ -53,6 +56,22 @@ class MainViewModel(
             withContext(Dispatchers.IO) {
                 database.saveSnippets(updatedSnippets)
             }
+        }
+    }
+
+    fun copyCode(snippet: Snippet){
+        val clipboard = Toolkit.getDefaultToolkit().systemClipboard
+        try {
+            val codeToCopy = snippet.code?:"Could not find code to copy for snippet with title '${snippet.title}'"
+            clipboard.setContents(StringSelection(codeToCopy), null)
+            _uiState.update { it.copy(codeCopied = true) }
+        }catch (e: IllegalStateException){
+            _uiState.update { it.copy(codeCopied = false) }
+            e.printStackTrace()
+        }
+        scope.launch {
+            delay(1200)
+            _uiState.update { it.copy(codeCopied = null)}
         }
     }
 
