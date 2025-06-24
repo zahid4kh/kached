@@ -97,6 +97,7 @@ fun AddSnippetScreen(navigator: Navigator, viewModel: MainViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
+            // SNIPPET TITLE
             OutlinedTextField(
                 value = title,
                 onValueChange = { title = it },
@@ -113,6 +114,7 @@ fun AddSnippetScreen(navigator: Navigator, viewModel: MainViewModel) {
                     },
                 shape = textFieldShape
             )
+            // SNIPPET DESCRIPTION
             OutlinedTextField(
                 value = description,
                 onValueChange = { description = it },
@@ -132,6 +134,7 @@ fun AddSnippetScreen(navigator: Navigator, viewModel: MainViewModel) {
                 maxLines = 5,
                 shape = textFieldShape
             )
+            // SNIPPET
             OutlinedTextField(
                 value = code,
                 onValueChange = { code = it },
