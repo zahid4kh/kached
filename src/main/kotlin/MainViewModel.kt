@@ -2,6 +2,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import moe.tlaster.precompose.viewmodel.ViewModel
@@ -34,6 +35,14 @@ class MainViewModel(
         scope.launch(Dispatchers.IO) {
             database.saveSnippets((newSnippets))
         }
+    }
+
+    fun expandSnippet(snippet: Snippet){
+        _uiState.update { it.copy(expandedSnippet = snippet) }
+    }
+
+    fun collapseSnippet(){
+        _uiState.update { it.copy(expandedSnippet = null) }
     }
 
     fun removeSnippet(snippetTitleToRemove: String) {
