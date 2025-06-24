@@ -1,3 +1,4 @@
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,8 +29,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import kached.resources.Res
+import kached.resources.move_left
 import moe.tlaster.precompose.navigation.Navigator
+import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,15 +44,28 @@ fun AddSnippetScreen(navigator: Navigator, viewModel: MainViewModel) {
     var description by remember { mutableStateOf("") }
     var code by remember { mutableStateOf("") }
 
+    val textFieldShape = MaterialTheme.shapes.medium
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Add New Snippet") },
+                title = {
+                    Text(
+                        text = "Add New Snippet",
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = { navigator.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            painter = painterResource(Res.drawable.move_left),
+                            contentDescription = "Back",
+                            tint = MaterialTheme.colorScheme.onSurface
+                        )
                     }
-                }
+                },
+                modifier = Modifier.clip(RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp))
             )
         }
     ) { paddingValues ->
