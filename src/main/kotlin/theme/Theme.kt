@@ -79,18 +79,9 @@ fun AppTheme(
 ) {
     val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
 
-    val robotoFontFamily = FontFamily(
-        Font(resource = Res.font.Roboto_Regular, weight = FontWeight.Normal, style = FontStyle.Normal),
-        Font(resource = Res.font.Roboto_Italic, weight = FontWeight.Normal, style = FontStyle.Italic),
-        Font(resource = Res.font.Roboto_Bold, weight = FontWeight.Bold, style = FontStyle.Normal)
+    val robotoFontFamily = getRobotoFamily()
 
-    )
-
-    val ubuntuFontFamily = FontFamily(
-        Font(resource = Res.font.Ubuntu_Regular, weight = FontWeight.Normal, style = FontStyle.Normal),
-        Font(resource = Res.font.Ubuntu_Italic, weight = FontWeight.Normal, style = FontStyle.Italic),
-        Font(resource = Res.font.Ubuntu_Bold, weight = FontWeight.Bold, style = FontStyle.Normal)
-    )
+    val ubuntuFontFamily = getUbuntuFamily()
 
     val ubuntuType = Typography(
         headlineLarge = TextStyle(
@@ -193,4 +184,34 @@ fun AppTheme(
         typography = if (System.getProperty("os.name").lowercase() == "linux") ubuntuType else robotoType,
         content = content
     )
+}
+
+@Composable
+fun getRobotoFamily(): FontFamily{
+    val robotoFontFamily = FontFamily(
+        Font(resource = Res.font.Roboto_Regular, weight = FontWeight.Normal, style = FontStyle.Normal),
+        Font(resource = Res.font.Roboto_Italic, weight = FontWeight.Normal, style = FontStyle.Italic),
+        Font(resource = Res.font.Roboto_Bold, weight = FontWeight.Bold, style = FontStyle.Normal)
+    )
+    return robotoFontFamily
+}
+
+@Composable
+fun getUbuntuFamily(): FontFamily{
+    val ubuntuFontFamily = FontFamily(
+        Font(resource = Res.font.Ubuntu_Regular, weight = FontWeight.Normal, style = FontStyle.Normal),
+        Font(resource = Res.font.Ubuntu_Italic, weight = FontWeight.Normal, style = FontStyle.Italic),
+        Font(resource = Res.font.Ubuntu_Bold, weight = FontWeight.Bold, style = FontStyle.Normal)
+    )
+    return ubuntuFontFamily
+}
+
+@Composable
+fun getJetbrainsMonoFamily(): FontFamily{
+    val jetbrainsMonoFamily = FontFamily(
+        Font(resource = Res.font.JetBrainsMono_Regular, weight = FontWeight.Normal, style = FontStyle.Normal),
+        Font(resource = Res.font.JetBrainsMono_Italic, weight = FontWeight.Normal, style = FontStyle.Italic),
+        Font(resource = Res.font.JetBrainsMono_Bold, weight = FontWeight.Bold, style = FontStyle.Normal)
+    )
+    return jetbrainsMonoFamily
 }
