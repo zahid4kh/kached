@@ -10,13 +10,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.key.*
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kached.resources.Res
+import kached.resources.maximize
 import kached.resources.move_left
 import moe.tlaster.precompose.navigation.Navigator
 import org.jetbrains.compose.resources.painterResource
@@ -28,6 +29,9 @@ fun AddSnippetScreen(navigator: Navigator, viewModel: MainViewModel) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var code by remember { mutableStateOf("") }
+
+    val uiState by viewModel.uiState.collectAsState()
+    var isCodeFieldExpanded by remember { mutableStateOf(false) }
 
     val jbMonoFamily = getJetbrainsMonoFamily()
 
@@ -106,18 +110,37 @@ fun AddSnippetScreen(navigator: Navigator, viewModel: MainViewModel) {
                 shape = textFieldShape
             )
             // SNIPPET
-            OutlinedTextField(
-                value = code,
-                onValueChange = { code = it },
-                textStyle = TextStyle(fontFamily = jbMonoFamily),
-                label = { Text("Code") },
-                modifier = Modifier
-                    .fillMaxWidth(0.8f)
-                    .heightIn(min = 150.dp)
-                    .animateContentSize(),
-                maxLines = 10,
-                shape = textFieldShape
-            )
+            Box(contentAlignment = Alignment.TopStart, modifier = Modifier.padding(top = 15.dp)){
+                OutlinedTextField(
+                    value = code,
+                    onValueChange = { code = it },
+                    textStyle = TextStyle(fontFamily = jbMonoFamily),
+                    label = {Text("Code", fontFamily = jbMonoFamily)},
+                    modifier = Modifier
+                        .fillMaxWidth(0.8f)
+                        .heightIn(min = 150.dp)
+                        .animateContentSize(),
+                    maxLines = uiState.linesOfVisibleCode,
+                    shape = textFieldShape
+                )
+
+                IconButton(
+                    onClick = {
+                        isCodeFieldExpanded = !isCodeFieldExpanded
+                        if(isCodeFieldExpanded) viewModel.expandCodeField() else viewModel.collapseCodeField()
+                    },
+                    modifier = Modifier
+                        .offset(x = 3.dp, y = 5.dp)
+                        .align(Alignment.TopEnd)
+                ){
+                    Icon(
+                        painter = painterResource(Res.drawable.maximize),
+                        contentDescription = "Show more",
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+            }
+
 
             Spacer(Modifier.height(20.dp))
 
