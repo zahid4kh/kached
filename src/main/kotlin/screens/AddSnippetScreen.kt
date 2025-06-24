@@ -10,15 +10,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.key.*
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import kached.resources.Res
-import kached.resources.maximize
-import kached.resources.move_left
+import kached.resources.*
 import moe.tlaster.precompose.navigation.Navigator
 import org.jetbrains.compose.resources.painterResource
 import theme.getJetbrainsMonoFamily
@@ -134,7 +131,7 @@ fun AddSnippetScreen(navigator: Navigator, viewModel: MainViewModel) {
                         .align(Alignment.TopEnd)
                 ){
                     Icon(
-                        painter = painterResource(Res.drawable.maximize),
+                        painter = painterResource(if (isCodeFieldExpanded) Res.drawable.minimize else Res.drawable.maximize),
                         contentDescription = "Show more",
                         modifier = Modifier.size(20.dp)
                     )
