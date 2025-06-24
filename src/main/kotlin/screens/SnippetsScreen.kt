@@ -97,7 +97,7 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
                                 )
                             }
                             IconButton(
-                                onClick = {viewModel.copyCode(openedSnippet)},
+                                onClick = {viewModel.copyCodeAsPlainText(openedSnippet)},
                                 modifier = Modifier.align(Alignment.TopEnd)
                             ){
                                 Icon(

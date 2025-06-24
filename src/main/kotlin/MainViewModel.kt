@@ -59,7 +59,7 @@ class MainViewModel(
         }
     }
 
-    fun copyCode(snippet: Snippet){
+    fun copyCodeAsPlainText(snippet: Snippet){
         val clipboard = Toolkit.getDefaultToolkit().systemClipboard
         try {
             val codeToCopy = snippet.code?:"Could not find code to copy for snippet with title '${snippet.title}'"
