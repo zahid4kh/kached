@@ -165,17 +165,36 @@ fun AddSnippetScreen(navigator: Navigator, viewModel: MainViewModel) {
                             )
                             viewModel.addSnippet(newSnippet)
                             navigator.navigate("/snippets")
-                        } else {
-                            // TODO: Show Info Dialog!!!
-                            println("Title cannot be empty!")
                         }
                     },
                     enabled = title.isNotBlank(),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                     shape = RoundedCornerShape(8.dp),
-                    modifier = Modifier.weight(1f).height(50.dp)
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(50.dp)
                 ) {
-                    Text("Save Snippet", color = MaterialTheme.colorScheme.onPrimary)
+                    if(title.isBlank()){
+                        TooltipBox(
+                            positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(15.dp),
+                            tooltip = {
+                                PlainTooltip { Text("Title cannot be blank") }
+                            },
+                            state = rememberTooltipState()
+                        ) {
+                            Text(
+                                "Save Snippet",
+                                color = MaterialTheme.colorScheme.onPrimary,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
+                    }else{
+                        Text(
+                            "Save Snippet",
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
                 }
             }
         }
