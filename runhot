@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "Running with hot-reload"
+echo " "
+
+./gradlew :runHot --mainClass Kached --auto
