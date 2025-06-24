@@ -161,9 +161,7 @@ fun AddSnippetScreen(navigator: Navigator, viewModel: MainViewModel) {
                             val newSnippet = Snippet(
                                 title = title,
                                 description = description.ifBlank { null },
-                                code = code.ifBlank { null },
-                                isExpanded = false,
-                                visibleCodeLines = 15
+                                code = code.ifBlank { null }
                             )
                             viewModel.addSnippet(newSnippet)
                             navigator.navigate("/snippets")
