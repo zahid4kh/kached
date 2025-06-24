@@ -1,19 +1,12 @@
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.animation.core.spring
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -48,17 +41,27 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
                 Text("No snippets found. Add some!", style = MaterialTheme.typography.headlineSmall)
             }
         } else {
-            LazyColumn(
+            LazyVerticalGrid(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .animateContentSize(),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                items(snippets) { snippet ->
-                    SnippetCard(snippet = snippet, onDelete = {
-                        viewModel.removeSnippet(it)
-                    })
+                    .fillMaxWidth()
+                    .animateContentSize()
+                    .padding(20.dp)
+                    .padding(paddingValues),
+                columns = GridCells.Adaptive(500.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ){
+                items(
+                    items = snippets,
+                    key = {it}
+                ){snippet ->
+                    SnippetCard(
+                        snippet = snippet,
+                        onDelete = {
+                            viewModel.removeSnippet(it)
+                        },
+                        modifier = Modifier.animateItem(placementSpec = spring())
+                    )
                 }
             }
         }
