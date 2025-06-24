@@ -9,7 +9,7 @@ markdownRenderer = "0.32.0"
 hotReload = "1.0.0-alpha10"
 kotlinxDatetime = "0.6.2"
 slf4j = "2.0.12"
-deskit = "1.2.0"
+deskit = "1.2.1"
 
 [libraries]
 # Kotlinx
