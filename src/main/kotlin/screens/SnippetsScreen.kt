@@ -90,10 +90,7 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
                     onClose = { viewModel.collapseSnippet() },
                     content = {
                         Column{
-                            Column(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalAlignment = Alignment.End
-                            ){
+                            Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.End){
                                 // copy icon buttons
                                 Row(verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.spacedBy(5.dp)){
@@ -123,9 +120,7 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
                                         },
                                         state = rememberTooltipState()
                                     ){
-                                        IconButton(
-                                            onClick = {viewModel.copyCodeAsPlainText(openedSnippet)}
-                                        ){
+                                        IconButton(onClick = {viewModel.copyCodeAsPlainText(openedSnippet)}){
                                             Icon(
                                                 painterResource(Res.drawable.copy),
                                                 contentDescription = "Copy code as plaintext"
@@ -159,9 +154,7 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
                                         state = rememberTooltipState()
                                     ){
                                         // copy as markdown codeblock
-                                        IconButton(
-                                            onClick = {viewModel.copyCodeAsMarkdown(openedSnippet)}
-                                        ){
+                                        IconButton(onClick = {viewModel.copyCodeAsMarkdown(openedSnippet)}){
                                             Icon(
                                                 painterResource(Res.drawable.square_m),
                                                 contentDescription = "Copy code as a markdown codeblock"
