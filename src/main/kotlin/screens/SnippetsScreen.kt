@@ -6,21 +6,22 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import deskit.dialogs.InfoDialog
+import dev.snipme.highlights.Highlights
+import dev.snipme.highlights.model.SyntaxLanguage
+import dev.snipme.highlights.model.SyntaxThemes
 import kached.resources.Res
 import kached.resources.copy
 import kached.resources.square_m
@@ -192,22 +193,24 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
 
                                 }
                             }
-                            Box(modifier = Modifier
-                                .fillMaxSize()
-                                .verticalScroll(rememberScrollState())
-                                .clip(MaterialTheme.shapes.medium)
-                                .background(MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.6f))
-                            ){
-                                SelectionContainer {
-                                    Text(
-                                        text = openedSnippet.code?:"// No code here",
-                                        fontFamily = getJetbrainsMonoFamily(),
-                                        modifier = Modifier.padding(12.dp)
-                                    )
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .clip(MaterialTheme.shapes.medium)
+                                    .background(MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.6f))
+                                    .padding(12.dp)
+                            ) {
+                                val code = openedSnippet.code ?: "// No code here"
+                                val highlights = remember(code) {
+                                    Highlights.Builder()
+                                        .code(code)
+                                        .language(SyntaxLanguage.KOTLIN) // will make this dynamic
+                                        .theme(SyntaxThemes.atom()) // will make this dynamic
+                                        .build()
                                 }
+                                ViewCodeText(highlights = highlights) // edited version of CodeTextView()
                             }
                         }
-
                     }
                 )
             }

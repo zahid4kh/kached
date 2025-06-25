@@ -49,6 +49,9 @@ dependencies {
 
     // Deskit - for Material3 file chooser and information dialogs
     implementation(libs.deskit)
+
+    implementation("dev.snipme:highlights:1.0.0")
+    implementation("dev.snipme:kodeview:0.9.0")
 }
 
 
