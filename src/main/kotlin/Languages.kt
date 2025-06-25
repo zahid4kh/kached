@@ -1,0 +1,19 @@
+enum class Languages {
+    DEFAULT,
+    C,
+    CPP,
+    DART,
+    JAVA,
+    KOTLIN,
+    RUST,
+    CSHARP,
+    JAVASCRIPT,
+    PERL,
+    PYTHON,
+    RUBY,
+    SHELL,
+    SWIFT,
+    TYPESCRIPT,
+    GO,
+    PHP
+}
