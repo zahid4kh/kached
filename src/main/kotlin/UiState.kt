@@ -7,5 +7,6 @@ data class UiState(
     val codeCopiedAsText: Boolean? = null,
     val codeCopiedAsMarkdown: Boolean? = null,
     val showSaveAsTextDialog: Boolean = false,
-    val showSaveAsMdDialog: Boolean = false
+    val showSaveAsMdDialog: Boolean = false,
+    val selectedLanguage: Languages? = Languages.DEFAULT
 )
