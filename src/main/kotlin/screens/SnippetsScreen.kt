@@ -214,3 +214,36 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
         }
     }
 }
+
+/*
+copied from CodeTextView() from `package dev.snipme.kodeview.view`
+had to add the `fontFamily = getJetbrainsMonoFamily()`
+*/
+@Composable
+private fun ViewCodeText(
+    modifier: Modifier = Modifier.background(Color.Transparent),
+    highlights: Highlights
+) {
+    var textState by remember {
+        mutableStateOf(AnnotatedString(highlights.getCode()))
+    }
+
+    LaunchedEffect(highlights) {
+        textState = highlights
+            .getHighlights()
+            .generateAnnotatedString(highlights.getCode())
+    }
+
+    Surface(
+        modifier = modifier,
+        color = Color.Transparent
+    ) {
+        Text(
+            modifier = modifier
+                .verticalScroll(rememberScrollState())
+                .horizontalScroll(rememberScrollState()),
+            text = textState,
+            fontFamily = getJetbrainsMonoFamily()
+        )
+    }
+}
