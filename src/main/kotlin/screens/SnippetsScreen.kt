@@ -1,5 +1,6 @@
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -17,14 +18,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import deskit.dialogs.InfoDialog
-import kached.resources.*
+import kached.resources.Res
+import kached.resources.copy
+import kached.resources.square_m
 import moe.tlaster.precompose.navigation.Navigator
 import org.jetbrains.compose.resources.painterResource
 import theme.getJetbrainsMonoFamily
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
     val uiState by viewModel.uiState.collectAsState()
@@ -84,44 +89,104 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
                     message = openedSnippet.description?:"",
                     onClose = { viewModel.collapseSnippet() },
                     content = {
-                        Box(modifier = Modifier
-                            .fillMaxSize()
-                            .verticalScroll(rememberScrollState())
-                            .clip(MaterialTheme.shapes.medium)
-                            .background(MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.6f))
-                        ){
-                            SelectionContainer {
-                                Text(
-                                    text = openedSnippet.code?:"// No code here",
-                                    fontFamily = getJetbrainsMonoFamily(),
-                                    modifier = Modifier.padding(12.dp)
-                                )
-                            }
-                            // copy icon buttons
-                            Row(modifier = Modifier.align(Alignment.TopEnd),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(5.dp)){
-                                // copy as plain-text
-                                IconButton(
-                                    onClick = {viewModel.copyCodeAsPlainText(openedSnippet)}
-                                ){
-                                    Icon(
-                                        painterResource(Res.drawable.copy),
-                                        contentDescription = "Copy code as plaintext"
-                                    )
-                                }
-                                // copy as markdown codeblock
-                                IconButton(
-                                    onClick = {viewModel.copyCodeAsMarkdown(openedSnippet)}
-                                ){
-                                    Icon(
-                                        painterResource(Res.drawable.square_m),
-                                        contentDescription = "Copy code as a markdown codeblock"
-                                    )
-                                }
-                            }
+                        Column{
+                            Column(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalAlignment = Alignment.End
+                            ){
+                                // copy icon buttons
+                                Row(verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(5.dp)){
+                                    // copy as plain-text
+                                    TooltipBox(
+                                        positionProvider = TooltipDefaults.rememberRichTooltipPositionProvider(),
+                                        tooltip = {
+                                            RichTooltip(
+                                                title = {
+                                                    Text(
+                                                        text = "Copy as text",
+                                                        style = MaterialTheme.typography.titleMedium.copy(
+                                                            fontWeight = FontWeight.Bold
+                                                        )
+                                                    )
+                                                },
+                                                caretSize = DpSize(27.dp, 17.dp),
+                                                colors = RichTooltipColors(
+                                                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                                                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                                    titleContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                                    actionContentColor = MaterialTheme.colorScheme.onTertiaryContainer
+                                                )
+                                            ) {
+                                                Text("Code will be copied as plain text")
+                                            }
+                                        },
+                                        state = rememberTooltipState()
+                                    ){
+                                        IconButton(
+                                            onClick = {viewModel.copyCodeAsPlainText(openedSnippet)}
+                                        ){
+                                            Icon(
+                                                painterResource(Res.drawable.copy),
+                                                contentDescription = "Copy code as plaintext"
+                                            )
+                                        }
+                                    }
 
+                                    TooltipBox(
+                                        positionProvider = TooltipDefaults.rememberRichTooltipPositionProvider(),
+                                        tooltip = {
+                                            RichTooltip(
+                                                title = {
+                                                    Text(
+                                                        text = "Copy as markdown",
+                                                        style = MaterialTheme.typography.titleMedium.copy(
+                                                            fontWeight = FontWeight.Bold
+                                                        )
+                                                    )
+                                                },
+                                                caretSize = DpSize(27.dp, 17.dp),
+                                                colors = RichTooltipColors(
+                                                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                                                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                                    titleContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                                    actionContentColor = MaterialTheme.colorScheme.onTertiaryContainer
+                                                )
+                                            ) {
+                                                Text("Code will be copied as markdown codeblock")
+                                            }
+                                        },
+                                        state = rememberTooltipState()
+                                    ){
+                                        // copy as markdown codeblock
+                                        IconButton(
+                                            onClick = {viewModel.copyCodeAsMarkdown(openedSnippet)}
+                                        ){
+                                            Icon(
+                                                painterResource(Res.drawable.square_m),
+                                                contentDescription = "Copy code as a markdown codeblock"
+                                            )
+                                        }
+                                    }
+
+                                }
+                            }
+                            Box(modifier = Modifier
+                                .fillMaxSize()
+                                .verticalScroll(rememberScrollState())
+                                .clip(MaterialTheme.shapes.medium)
+                                .background(MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.6f))
+                            ){
+                                SelectionContainer {
+                                    Text(
+                                        text = openedSnippet.code?:"// No code here",
+                                        fontFamily = getJetbrainsMonoFamily(),
+                                        modifier = Modifier.padding(12.dp)
+                                    )
+                                }
+                            }
                         }
+
                     }
                 )
             }
