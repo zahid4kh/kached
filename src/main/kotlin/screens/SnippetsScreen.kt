@@ -1,14 +1,12 @@
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.spring
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
@@ -18,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -94,6 +93,20 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
                                 // copy icon buttons
                                 Row(verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.spacedBy(5.dp)){
+                                    AnimatedVisibility(visible = uiState.codeCopiedAsText == true){
+                                        Box(modifier = Modifier
+                                            .border(width = 1.dp, color = Color.Green.copy(green = 100f), shape = MaterialTheme.shapes.medium)){
+                                            Text("Copied as text!", modifier = Modifier.padding(5.dp),
+                                                style = MaterialTheme.typography.bodyMedium)
+                                        }
+                                    }
+                                    AnimatedVisibility(visible = uiState.codeCopiedAsText == false){
+                                        Box(modifier = Modifier
+                                            .border(width = 1.dp, color = Color.Red.copy(red = 170f), shape = MaterialTheme.shapes.medium)){
+                                            Text("Failed to copy as text!", modifier = Modifier.padding(5.dp),
+                                                style = MaterialTheme.typography.bodyMedium)
+                                        }
+                                    }
                                     // copy as plain-text
                                     TooltipBox(
                                         positionProvider = TooltipDefaults.rememberRichTooltipPositionProvider(),
@@ -128,6 +141,22 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
                                         }
                                     }
 
+                                    AnimatedVisibility(visible = uiState.codeCopiedAsMarkdown == true){
+                                        Box(modifier = Modifier
+                                            .border(width = 1.dp, color = Color.Green.copy(green = 100f), shape = MaterialTheme.shapes.medium)){
+                                            Text("Copied as markdown!", modifier = Modifier.padding(5.dp),
+                                                style = MaterialTheme.typography.bodyMedium)
+                                        }
+                                    }
+                                    AnimatedVisibility(visible = uiState.codeCopiedAsText == false){
+                                        Box(modifier = Modifier
+                                            .border(width = 1.dp, color = Color.Red.copy(red = 170f), shape = MaterialTheme.shapes.medium)){
+                                            Text("Failed to copy as markdown!", modifier = Modifier.padding(5.dp),
+                                                style = MaterialTheme.typography.bodyMedium)
+                                        }
+                                    }
+
+                                    // copy as markdown codeblock
                                     TooltipBox(
                                         positionProvider = TooltipDefaults.rememberRichTooltipPositionProvider(),
                                         tooltip = {
@@ -153,7 +182,6 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
                                         },
                                         state = rememberTooltipState()
                                     ){
-                                        // copy as markdown codeblock
                                         IconButton(onClick = {viewModel.copyCodeAsMarkdown(openedSnippet)}){
                                             Icon(
                                                 painterResource(Res.drawable.square_m),
