@@ -1,8 +1,6 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import java.util.UUID
-import java.util.Scanner
-import org.jetbrains.compose.reload.ComposeHotRun 
 import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
+import java.util.*
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
