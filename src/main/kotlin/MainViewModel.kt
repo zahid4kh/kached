@@ -10,6 +10,7 @@ import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
+import java.io.File
 
 class MainViewModel(
     private val database: Database,
@@ -46,6 +47,68 @@ class MainViewModel(
 
     fun collapseSnippet(){
         _uiState.update { it.copy(expandedSnippet = null) }
+    }
+
+    fun showExportAsTextDialog(snippet: Snippet){
+        _uiState.update {
+            it.copy(
+                showSaveAsTextDialog = true,
+                selectedSnippetToSave = snippet
+            )
+        }
+    }
+
+    fun closeExportAsTextDialog(){
+        _uiState.update {
+            it.copy(
+                showSaveAsTextDialog = false,
+                selectedSnippetToSave = null
+            )
+        }
+    }
+
+    fun showExportAsMdDialog(snippet: Snippet){
+        _uiState.update {
+            it.copy(
+                showSaveAsMdDialog = true,
+                selectedSnippetToSave = snippet
+            )
+        }
+    }
+
+    fun closeExportAsMdDialog(){
+        _uiState.update {
+            it.copy(
+                showSaveAsMdDialog = false,
+                selectedSnippetToSave = null
+            )
+        }
+    }
+
+    fun saveAsPlainText(snippet: Snippet, file: File){
+        scope.launch(Dispatchers.IO) {
+            val content = snippet.code?:"No code was found, therefore none written!"
+            file.writeText(content)
+            delay(100)
+            closeExportAsTextDialog()
+        }
+    }
+
+    fun saveAsMarkdown(snippet: Snippet, file: File){
+        val content = """
+## ${snippet.title}
+
+### ${snippet.description?:""}
+
+```kotlin
+${snippet.code?:"No code was found, therefore none written!"}
+```
+        """.trimIndent()
+        scope.launch {
+            file.writeText(content)
+            delay(100)
+            closeExportAsMdDialog()
+        }
     }
 
     fun removeSnippet(snippetTitleToRemove: String) {

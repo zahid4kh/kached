@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import deskit.dialogs.InfoDialog
+import deskit.dialogs.file.FileSaverDialog
 import dev.snipme.highlights.Highlights
 import dev.snipme.highlights.model.SyntaxLanguage
 import dev.snipme.highlights.model.SyntaxThemes
@@ -78,6 +79,12 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
                         onMaximizeSnippet = {
                             viewModel.expandSnippet(snippet)
                         },
+                        onExportAsText = {
+                            viewModel.showExportAsTextDialog(snippet)
+                        },
+                        onExportAsMarkdown = {
+                            viewModel.showExportAsMdDialog(snippet)
+                        }
                     )
                 }
             }
@@ -212,6 +219,36 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
                             }
                         }
                     }
+                )
+            }
+
+            if(uiState.showSaveAsTextDialog && uiState.selectedSnippetToSave != null){
+                FileSaverDialog(
+                    title = "Save as a text file",
+                    extension = ".txt",
+                    suggestedFileName = uiState.selectedSnippetToSave?.title!!,
+                    onSave = {file->
+                        viewModel.saveAsPlainText(
+                            snippet = uiState.selectedSnippetToSave?:Snippet(),
+                            file = file
+                        )
+                    },
+                    onCancel = {viewModel.closeExportAsTextDialog()}
+                )
+            }
+
+            if(uiState.showSaveAsMdDialog && uiState.selectedSnippetToSave != null){
+                FileSaverDialog(
+                    title = "Save as a markdown file",
+                    extension = ".md",
+                    suggestedFileName = uiState.selectedSnippetToSave?.title!!,
+                    onSave = {file->
+                        viewModel.saveAsMarkdown(
+                            snippet = uiState.selectedSnippetToSave?:Snippet(),
+                            file = file
+                        )
+                    },
+                    onCancel = {viewModel.closeExportAsMdDialog()}
                 )
             }
         }
