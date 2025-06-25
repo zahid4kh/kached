@@ -64,14 +64,14 @@ class MainViewModel(
         try {
             val codeToCopy = snippet.code?:"Could not find code to copy for snippet with title '${snippet.title}'"
             clipboard.setContents(StringSelection(codeToCopy), null)
-            _uiState.update { it.copy(codeCopied = true) }
+            _uiState.update { it.copy(codeCopiedAsText = true) }
         }catch (e: IllegalStateException){
-            _uiState.update { it.copy(codeCopied = false) }
+            _uiState.update { it.copy(codeCopiedAsText = false) }
             e.printStackTrace()
         }
         scope.launch {
             delay(1200)
-            _uiState.update { it.copy(codeCopied = null)}
+            _uiState.update { it.copy(codeCopiedAsText = null)}
         }
     }
 
@@ -85,14 +85,14 @@ $codeToCopy
 ```
             """.trimIndent()
             clipboard.setContents(StringSelection(finalMarkdownContent), null)
-            _uiState.update { it.copy(codeCopied = true) }
+            _uiState.update { it.copy(codeCopiedAsMarkdown = true) }
         }catch (e: IllegalStateException){
-            _uiState.update { it.copy(codeCopied = false) }
+            _uiState.update { it.copy(codeCopiedAsMarkdown = false) }
             e.printStackTrace()
         }
         scope.launch {
             delay(1200)
-            _uiState.update { it.copy(codeCopied = null)}
+            _uiState.update { it.copy(codeCopiedAsMarkdown = null)}
         }
     }
 

@@ -3,5 +3,6 @@ data class UiState(
     val snippets: List<Snippet> = emptyList(),
     val linesOfVisibleCode: Int = 20,
     val expandedSnippet: Snippet? = null,
-    val codeCopied: Boolean? = null
+    val codeCopiedAsText: Boolean? = null,
+    val codeCopiedAsMarkdown: Boolean? = null
 )
