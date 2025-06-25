@@ -1,9 +1,13 @@
+
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,9 +19,15 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import kached.resources.*
+import kached.resources.Res
+import kached.resources.maximize
+import kached.resources.minimize
+import kached.resources.move_left
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import moe.tlaster.precompose.navigation.Navigator
 import org.jetbrains.compose.resources.painterResource
+import screens.LanguageSelectorDropdown
 import theme.getJetbrainsMonoFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -27,8 +37,11 @@ fun AddSnippetScreen(navigator: Navigator, viewModel: MainViewModel) {
     var description by remember { mutableStateOf("") }
     var code by remember { mutableStateOf("") }
 
+    val scope = rememberCoroutineScope()
+
     val uiState by viewModel.uiState.collectAsState()
     var isCodeFieldExpanded by remember { mutableStateOf(false) }
+    var isDropdownExpanded by remember { mutableStateOf(false) }
 
     val jbMonoFamily = getJetbrainsMonoFamily()
 
@@ -112,7 +125,7 @@ fun AddSnippetScreen(navigator: Navigator, viewModel: MainViewModel) {
                     value = code,
                     onValueChange = { code = it },
                     textStyle = TextStyle(fontFamily = jbMonoFamily),
-                    label = {Text("Code", fontFamily = jbMonoFamily)},
+                    label = {Text(uiState.selectedLanguage.toString().lowercase(), fontFamily = jbMonoFamily)},
                     modifier = Modifier
                         .fillMaxWidth(0.8f)
                         .heightIn(min = 150.dp)
@@ -120,6 +133,41 @@ fun AddSnippetScreen(navigator: Navigator, viewModel: MainViewModel) {
                     maxLines = uiState.linesOfVisibleCode,
                     shape = textFieldShape
                 )
+
+                IconButton(
+                    onClick = {
+                        isDropdownExpanded = !isDropdownExpanded
+                    },
+                    modifier = Modifier
+                        .offset(x = (-30).dp, y = 5.dp)
+                        .align(Alignment.TopEnd)
+                ){
+                    Icon(
+                        imageVector = if (isDropdownExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore ,
+                        contentDescription = "Show more",
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .offset(x = -140.dp, y = 55.dp)
+                ){
+                    LanguageSelectorDropdown(
+                        modifier = Modifier,
+                        isExpanded = isDropdownExpanded,
+                        onDismiss = {isDropdownExpanded = false},
+                        onLanguageSelected = {lang->
+                            scope.launch {
+                                viewModel.selectLanguage(lang)
+                                delay(30)
+                                isDropdownExpanded = false
+                            }
+                        }
+                    )
+                }
+
 
                 IconButton(
                     onClick = {
@@ -161,7 +209,8 @@ fun AddSnippetScreen(navigator: Navigator, viewModel: MainViewModel) {
                             val newSnippet = Snippet(
                                 title = title.trim(),
                                 description = description.trim().ifBlank { null },
-                                code = code.trim().ifBlank { null }
+                                code = code.trim().ifBlank { null },
+                                language = uiState.selectedLanguage?:Languages.KOTLIN
                             )
                             viewModel.addSnippet(newSnippet)
                             navigator.navigate("/snippets")

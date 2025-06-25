@@ -41,6 +41,27 @@ class MainViewModel(
         }
     }
 
+//    fun setSnippetLanguage(snippetToUpdate: Snippet, language: Languages){
+//        _uiState.update { currentState->
+//            val updated = currentState.snippets.map { snippet->
+//                if(snippet.title == snippetToUpdate.title){
+//                    snippet.copy(
+//                        language = language
+//                    )
+//                }else{
+//                    snippet
+//                }
+//            }
+//            currentState.copy(
+//                snippets = updated
+//            )
+//        }
+//    }
+
+    fun selectLanguage(language: Languages){
+        _uiState.update {it.copy(selectedLanguage = language)}
+    }
+
     fun expandSnippet(snippet: Snippet){
         _uiState.update { it.copy(expandedSnippet = snippet) }
     }
