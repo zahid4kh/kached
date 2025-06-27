@@ -17,6 +17,28 @@ A simple desktop application for managing code snippets offline. Built with Kotl
 
 The app has a simple interface with a main screen, snippet creation form, and a dynamic grid view of all your saved snippets.
 
+## Installation
+
+### Linux (Recommended)
+
+**Easy installation via APT repository:**
+
+📦 **Install from [my APT repository](https://zahid4kh.github.io/my-apt-repo)**
+
+This is the recommended method for Ubuntu/Debian users as it provides automatic updates and dependency management.
+
+```bash
+# Add repository GPG key
+wget -qO- https://zahid4kh.github.io/my-apt-repo/KEY.gpg | sudo gpg --dearmor -o /usr/share/keyrings/zahid-archive-keyring.gpg
+
+# Add repository to sources list
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/zahid-archive-keyring.gpg] https://zahid4kh.github.io/my-apt-repo stable main" | sudo tee /etc/apt/sources.list.d/zahid-apps.list
+
+# Update and install
+sudo apt update
+sudo apt install kached
+```
+
 ## Build from source
 
 ### Prerequisites
@@ -33,11 +55,13 @@ chmod +x gradlew
 ### Running the Application
 
 **Standard run:**
+
 ```bash
 ./gradlew run
 ```
 
 **With hot reload (for development):**
+
 ```bash
 ./gradlew :runHot --mainClass Kached --auto
 ```
@@ -51,6 +75,7 @@ Build a native installer for your platform:
 ```
 
 **Platform-specific builds:**
+
 - `./gradlew packageDmg` - macOS DMG
 - `./gradlew packageMsi` - Windows MSI
 - `./gradlew packageDeb` - Linux DEB
@@ -67,6 +92,7 @@ Build a native installer for your platform:
 ## Data Storage
 
 All snippets and settings are stored locally in:
+
 - **Linux/macOS:** `~/.kached/`
 - **Windows:** `%USERPROFILE%\.kached\`
 
