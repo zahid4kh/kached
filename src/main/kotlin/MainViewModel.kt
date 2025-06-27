@@ -121,7 +121,7 @@ class MainViewModel(
 
 ### ${snippet.description?:""}
 
-```kotlin
+```${snippet.language}
 ${snippet.code?:"No code was found, therefore none written!"}
 ```
         """.trimIndent()
