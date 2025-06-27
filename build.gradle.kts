@@ -88,7 +88,7 @@ compose.desktop {
                 shortcut = true
                 dirChooser = true
                 menu = true
-                vendor = "Your Name or Company Name"
+                vendor = "Zahid Khalilov"
                 upgradeUuid = "62b87cda-144a-4ba2-b31b-02eb3f4e4562"
                 iconFile.set(project.file("icons/windows.ico"))
             }
