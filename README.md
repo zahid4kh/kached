@@ -1,65 +1,81 @@
 # Kached
 
-A desktop application built with Kotlin and Compose for Desktop.
+A simple desktop application for managing code snippets offline. Built with Kotlin and Compose for Desktop.
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.1.20-blue.svg?logo=kotlin)](https://kotlinlang.org) [![Compose](https://img.shields.io/badge/Compose-1.8.0-blue.svg?logo=jetpack-compose)](https://www.jetbrains.com/lp/compose-multiplatform/)
 
-## Features
+## What it does
 
-- Modern UI with Material 3 design
-- Dark mode support
-- Cross-platform (Windows, macOS, Linux)
-- Hot reload support for faster development
+- **Store code snippets** with title, description, and code (with optionally selectable language)
+- **Syntax highlighting** for 17+ programming languages (Kotlin, Java, Python, JavaScript, C++, etc.)
+- **Export snippets** as `.txt`, `.md`, or language-specific files (`.kt`, `.py`, `.js`, etc.)
+- **Dark/light mode** support (Material3 Theming)
+- **Offline storage** - all data saved locally
+- **Cross-platform** - Windows, Linux
 
-## Development Setup
+## Screenshots
+
+The app has a simple interface with a main screen, snippet creation form, and a dynamic grid view of all your saved snippets.
+
+## Build from source
 
 ### Prerequisites
 
 - JDK 17 or later
 - Kotlin 2.1.20 or later
-- IntelliJ IDEA (recommended) or Android Studio
 
-### Make Gradle Wrapper Executable (Linux/macOS only)
-
-After cloning the repository, you need to make the Gradle wrapper executable:
+### Make Gradle Wrapper Executable (Linux/macOS)
 
 ```bash
-chmod +x gradlew```
-
-**Note:** This step is not required on Windows as it uses `gradlew.bat`.
+chmod +x gradlew
+```
 
 ### Running the Application
 
-#### Standard Run
+**Standard run:**
 ```bash
-./gradlew run```
+./gradlew run
+```
 
-#### Hot Reload (Recommended for Development)
+**With hot reload (for development):**
 ```bash
-./gradlew :runHot --mainClass Kached --auto```
+./gradlew :runHot --mainClass Kached --auto
+```
 
-This enables automatic recompilation and hot swapping when you modify your code, making development much faster.
+### Building Native Distribution
 
-### Building a Native Distribution
-
-To build a native distribution for your platform:
+Build a native installer for your platform:
 
 ```bash
-./gradlew packageDistributionForCurrentOS```
+./gradlew packageDistributionForCurrentOS
+```
 
-This will create a platform-specific installer in the `build/compose/binaries/main-release/{extension}/` directory.
+**Platform-specific builds:**
+- `./gradlew packageDmg` - macOS DMG
+- `./gradlew packageMsi` - Windows MSI
+- `./gradlew packageDeb` - Linux DEB
+- `./gradlew packageExe` - Windows EXE
 
-### Available Gradle Tasks
+## Usage
 
-- `./gradlew run` - Run the application
-- `./gradlew :runHot --mainClass Kached --auto` - Run with hot reload
-- `./gradlew packageDistributionForCurrentOS` - Build native distribution for current OS
-- `./gradlew packageDmg` - Build macOS DMG (macOS only)
-- `./gradlew packageMsi` - Build Windows MSI (Windows only)
-- `./gradlew packageExe` - Build Windows EXE (Windows only)
-- `./gradlew packageDeb` - Build Linux DEB (Linux only)
+1. **Add snippets** - Click "New Snippet", enter title, description, and code
+2. **Choose language** - Select from the dropdown for proper syntax highlighting
+3. **View snippets** - Click "View All Snippets" to see your collection
+4. **Export snippets** - Use the download icon to export as text, markdown, or source files
+5. **Expand view** - Click the maximize icon for full syntax-highlighted view
 
+## Data Storage
 
-## Generated with Compose for Desktop Wizard
+All snippets and settings are stored locally in:
+- **Linux/macOS:** `~/.kached/`
+- **Windows:** `%USERPROFILE%\.kached\`
 
-This project was generated using the [Compose for Desktop Wizard](https://github.com/zahid4kh/compose-for-desktop).
+Your data stays on your machine - no internet required.
+
+## Supported Languages
+
+C, C++, C#, Dart, Go, Java, JavaScript, Kotlin, Perl, PHP, Python, Ruby, Rust, Shell, Swift, TypeScript
+
+## License
+
+Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for details.
