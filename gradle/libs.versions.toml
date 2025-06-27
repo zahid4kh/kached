@@ -5,7 +5,6 @@ kotlinxCoroutines = "1.10.2"
 kotlinxSerializationJson = "1.8.1"
 koin = "4.0.3"
 precompose = "1.6.2"
-markdownRenderer = "0.32.0"
 hotReload = "1.0.0-alpha10"
 kotlinxDatetime = "0.6.2"
 slf4j = "2.0.12"
@@ -23,10 +22,6 @@ koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin"
 # PreCompose
 precompose = { group = "moe.tlaster", name = "precompose", version.ref = "precompose" }
 precompose-viewmodel = { group = "moe.tlaster", name = "precompose-viewmodel", version.ref = "precompose"}
-
-
-# Markdown Renderer
-markdownRenderer = { group = "com.mikepenz", name = "multiplatform-markdown-renderer", version.ref = "markdownRenderer" }
 
 # kotlinx.datetime
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }

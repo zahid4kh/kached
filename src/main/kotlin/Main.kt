@@ -4,12 +4,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import theme.AppTheme
-import java.awt.Dimension
+import kached.resources.Res
+import kached.resources.kached
+import moe.tlaster.precompose.ProvidePreComposeLocals
+import org.jetbrains.compose.resources.painterResource
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.getKoin
-import kached.resources.*
-import moe.tlaster.precompose.ProvidePreComposeLocals
+import theme.AppTheme
+import java.awt.Dimension
 
 
 fun main() = application {
@@ -24,7 +26,7 @@ fun main() = application {
         state = rememberWindowState(size = DpSize(800.dp, 600.dp)),
         alwaysOnTop = true,
         title = "Kached - Code Snippet Manager",
-        icon = null
+        icon = painterResource(Res.drawable.kached)
     ) {
         window.minimumSize = Dimension(800, 600)
 

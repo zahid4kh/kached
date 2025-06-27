@@ -39,7 +39,6 @@ dependencies {
     api(libs.precompose.viewmodel)
     api(compose.foundation)
     api(compose.animation)
-    implementation(libs.markdownRenderer)
 
     // Kotlin's datetime library
     implementation(libs.kotlinx.datetime)
@@ -50,6 +49,7 @@ dependencies {
     // Deskit - for Material3 file chooser and information dialogs
     implementation(libs.deskit)
 
+    // KodeView for syntax highlighting
     implementation("dev.snipme:highlights:1.0.0")
     implementation("dev.snipme:kodeview:0.9.0")
 }
@@ -80,7 +80,7 @@ compose.desktop {
 
             linux{
                 shortcut = true
-                iconFile.set(project.file("icons/compose.png"))
+                iconFile.set(project.file("icons/linux.png"))
                 description = "Code snippet manager desktop app"
             }
 
@@ -89,13 +89,13 @@ compose.desktop {
                 dirChooser = true
                 menu = true
                 vendor = "Your Name or Company Name"
-                upgradeUuid = "run the 'generateUpgradeUuid' task and paste the generated UUID here only once"
-                iconFile.set(project.file("icons/compose.ico"))
+                upgradeUuid = "62b87cda-144a-4ba2-b31b-02eb3f4e4562"
+                iconFile.set(project.file("icons/windows.ico"))
             }
 
             macOS{
                 dockName = "Kached"
-                iconFile.set(project.file("icons/compose.icns"))
+                iconFile.set(project.file("icons/macos.icns"))
             }
         }
     }
