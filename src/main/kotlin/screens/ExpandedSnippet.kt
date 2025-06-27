@@ -1,5 +1,6 @@
 package screens
 
+import Languages
 import MainViewModel
 import Snippet
 import UiState
@@ -34,6 +35,11 @@ fun ExpandedSnippet(
     viewModel: MainViewModel,
     openedSnippet: Snippet
 ){
+    val selectedLanguage = if(openedSnippet.language == Languages.NONE){
+        ""
+    }else{
+        openedSnippet.language.toString().lowercase()
+    }
     InfoDialog(
         width = 1200.dp,
         height = 1000.dp,
@@ -50,7 +56,7 @@ fun ExpandedSnippet(
                         verticalAlignment = Alignment.CenterVertically
                     ){
                         Text(
-                            openedSnippet.language.toString().lowercase(),
+                            selectedLanguage,
                             fontFamily = getJetbrainsMonoFamily(),
                             style = MaterialTheme.typography.bodySmall
                         )

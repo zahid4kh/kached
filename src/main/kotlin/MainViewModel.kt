@@ -116,12 +116,17 @@ class MainViewModel(
     }
 
     fun saveAsMarkdown(snippet: Snippet, file: File){
+        val language = if(snippet.language == Languages.NONE){
+            ""
+        }else{
+            snippet.language.toString().lowercase()
+        }
         val content = """
 ## ${snippet.title}
 
 ### ${snippet.description?:""}
 
-```${snippet.language}
+```$language
 ${snippet.code?:"No code was found, therefore none written!"}
 ```
         """.trimIndent()
@@ -160,11 +165,16 @@ ${snippet.code?:"No code was found, therefore none written!"}
     }
 
     fun copyCodeAsMarkdown(snippet: Snippet){
+        val language = if(snippet.language == Languages.NONE){
+            ""
+        }else{
+            snippet.language.toString().lowercase()
+        }
         val clipboard = Toolkit.getDefaultToolkit().systemClipboard
         try {
             val codeToCopy = snippet.code?:"Could not find code to copy for snippet with title '${snippet.title}'"
             val finalMarkdownContent = """
-```kotlin
+```$language
 $codeToCopy
 ```
             """.trimIndent()

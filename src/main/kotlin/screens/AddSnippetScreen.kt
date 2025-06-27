@@ -33,13 +33,15 @@ import theme.getJetbrainsMonoFamily
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddSnippetScreen(navigator: Navigator, viewModel: MainViewModel) {
+    val uiState by viewModel.uiState.collectAsState()
+
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var code by remember { mutableStateOf("") }
+    val selectedLanguage = if (uiState.selectedLanguage == Languages.NONE) "Code" else uiState.selectedLanguage.toString().lowercase()
 
     val scope = rememberCoroutineScope()
 
-    val uiState by viewModel.uiState.collectAsState()
     var isCodeFieldExpanded by remember { mutableStateOf(false) }
     var isDropdownExpanded by remember { mutableStateOf(false) }
 
@@ -125,7 +127,7 @@ fun AddSnippetScreen(navigator: Navigator, viewModel: MainViewModel) {
                     value = code,
                     onValueChange = { code = it },
                     textStyle = TextStyle(fontFamily = jbMonoFamily),
-                    label = {Text(uiState.selectedLanguage.toString().lowercase(), fontFamily = jbMonoFamily)},
+                    label = {Text(selectedLanguage, fontFamily = jbMonoFamily)},
                     modifier = Modifier
                         .fillMaxWidth(0.8f)
                         .heightIn(min = 150.dp)
