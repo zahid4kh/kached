@@ -27,6 +27,7 @@ import kached.resources.copy
 import kached.resources.square_m
 import org.jetbrains.compose.resources.painterResource
 import theme.getJetbrainsMonoFamily
+import toSyntaxLanguage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -173,7 +174,7 @@ fun ExpandedSnippet(
                     val highlights = remember(code) {
                         Highlights.Builder()
                             .code(code)
-                            .language(SyntaxLanguage.KOTLIN) // will make this dynamic
+                            .language(openedSnippet.language?.toSyntaxLanguage() ?: SyntaxLanguage.DEFAULT)
                             .theme(SyntaxThemes.atom()) // will make this dynamic
                             .build()
                     }
