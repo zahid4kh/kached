@@ -43,3 +43,34 @@
 # Specifically keep AppSettings and its serializer
 -keep class AppSettings { *; }
 -keep class AppSettings$$serializer { *; }
+
+# Keep local data classes and enums
+-keep class Snippet { *; }
+-keep class Snippet$$serializer { *; }
+-keep class UiState { *; }
+-keep class Languages { *; }
+-keep class MainViewModel { *; }
+-keep class Database { *; }
+
+# Keep syntax highlighting library classes
+-keep class dev.snipme.highlights.** { *; }
+-keep class dev.snipme.highlights.model.** { *; }
+-keep class dev.snipme.highlights.Highlights { *; }
+-keep class dev.snipme.highlights.model.SyntaxLanguage { *; }
+-keep class dev.snipme.highlights.model.SyntaxThemes { *; }
+
+# Don't warn about syntax highlighting library
+-dontwarn dev.snipme.highlights.**
+-dontwarn dev.snipme.kodeview.**
+
+# Keep extension functions for Languages enum
+-keep class LanguagesKt { *; }
+
+# Keep ViewModels and their methods
+-keepclassmembers class **ViewModel {
+    public <methods>;
+}
+
+# Keep Compose navigation classes
+-dontwarn moe.tlaster.precompose.**
+-keep class moe.tlaster.precompose.** { *; }
