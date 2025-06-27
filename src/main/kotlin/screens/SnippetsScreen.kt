@@ -73,6 +73,9 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
                         },
                         onExportAsMarkdown = {
                             viewModel.showExportAsMdDialog(snippet)
+                        },
+                        onExportAsLanguage = {
+                            viewModel.showExportAsLanguageDialog(snippet)
                         }
                     )
                 }
@@ -112,6 +115,21 @@ fun SnippetsScreen(navigator: Navigator, viewModel: MainViewModel) {
                         )
                     },
                     onCancel = {viewModel.closeExportAsMdDialog()}
+                )
+            }
+
+            if(uiState.showSaveAsLanguageDialog && uiState.selectedSnippetToSave != null){
+                FileSaverDialog(
+                    title = "Save as ${uiState.selectedSnippetToSave?.language?.getFileExtension() ?: ".txt"} file",
+                    extension = uiState.selectedSnippetToSave?.language?.getFileExtension() ?: ".txt",
+                    suggestedFileName = uiState.selectedSnippetToSave?.title!!,
+                    onSave = {file->
+                        viewModel.saveAsLanguageFile(
+                            snippet = uiState.selectedSnippetToSave?:Snippet(),
+                            file = file
+                        )
+                    },
+                    onCancel = {viewModel.closeExportAsLanguageDialog()}
                 )
             }
         }

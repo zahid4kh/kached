@@ -1,3 +1,4 @@
+
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -10,7 +11,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -27,7 +27,8 @@ fun SnippetCard(
     modifier: Modifier,
     onMaximizeSnippet: () -> Unit = {},
     onExportAsText: () -> Unit = {},
-    onExportAsMarkdown: () -> Unit = {}
+    onExportAsMarkdown: () -> Unit = {},
+    onExportAsLanguage: () -> Unit = {}
 ) {
     var dropdownExpanded by remember { mutableStateOf(false) }
 
@@ -100,6 +101,21 @@ fun SnippetCard(
                             },
                             onClick = {onExportAsMarkdown()}
                         )
+
+                        if (snippet.language != null && snippet.language != Languages.NONE) {
+                            DropdownMenuItem(
+                                text = {Text("Export as ${snippet.language.getFileExtension()}")},
+                                leadingIcon = {
+                                    Icon(
+                                        painterResource(Res.drawable.braces),
+                                        contentDescription = "Export as ${snippet.language.getFileExtension()}",
+                                        modifier = Modifier.size(24.dp),
+                                        tint = MaterialTheme.colorScheme.onSurface
+                                    )
+                                },
+                                onClick = {onExportAsLanguage()}
+                            )
+                        }
                     }
                 }
 
