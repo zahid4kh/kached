@@ -5,5 +5,5 @@ data class Snippet(
     val title: String = "",
     val description: String? = null,
     val code: String? = null,
-    val language: Languages = Languages.KOTLIN
+    val language: Languages? = Languages.KOTLIN
 )

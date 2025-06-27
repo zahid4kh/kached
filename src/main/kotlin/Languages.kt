@@ -1,4 +1,5 @@
 enum class Languages {
+    NONE,
     C,
     CPP,
     DART,
