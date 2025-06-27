@@ -41,3 +41,25 @@ fun Languages.toSyntaxLanguage(): SyntaxLanguage {
         Languages.PHP -> SyntaxLanguage.PHP
     }
 }
+
+fun Languages.getFileExtension(): String {
+    return when (this) {
+        Languages.C -> ".c"
+        Languages.CPP -> ".cpp"
+        Languages.DART -> ".dart"
+        Languages.JAVA -> ".java"
+        Languages.KOTLIN -> ".kt"
+        Languages.RUST -> ".rs"
+        Languages.CSHARP -> ".cs"
+        Languages.JAVASCRIPT -> ".js"
+        Languages.PERL -> ".pl"
+        Languages.PYTHON -> ".py"
+        Languages.RUBY -> ".rb"
+        Languages.SHELL -> ".sh"
+        Languages.SWIFT -> ".swift"
+        Languages.TYPESCRIPT -> ".ts"
+        Languages.GO -> ".go"
+        Languages.PHP -> ".php"
+        Languages.NONE -> ".txt"
+    }
+}
