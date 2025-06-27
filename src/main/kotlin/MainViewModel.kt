@@ -106,6 +106,33 @@ class MainViewModel(
         }
     }
 
+    fun showExportAsLanguageDialog(snippet: Snippet){
+        _uiState.update {
+            it.copy(
+                showSaveAsLanguageDialog = true,
+                selectedSnippetToSave = snippet
+            )
+        }
+    }
+
+    fun closeExportAsLanguageDialog(){
+        _uiState.update {
+            it.copy(
+                showSaveAsLanguageDialog = false,
+                selectedSnippetToSave = null
+            )
+        }
+    }
+
+    fun saveAsLanguageFile(snippet: Snippet, file: File){
+        scope.launch(Dispatchers.IO) {
+            val content = snippet.code?:"No code was found, therefore none written!"
+            file.writeText(content)
+            delay(100)
+            closeExportAsLanguageDialog()
+        }
+    }
+
     fun saveAsPlainText(snippet: Snippet, file: File){
         scope.launch(Dispatchers.IO) {
             val content = snippet.code?:"No code was found, therefore none written!"

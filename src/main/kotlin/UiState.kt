@@ -8,5 +8,6 @@ data class UiState(
     val codeCopiedAsMarkdown: Boolean? = null,
     val showSaveAsTextDialog: Boolean = false,
     val showSaveAsMdDialog: Boolean = false,
+    val showSaveAsLanguageDialog: Boolean = false,
     val selectedLanguage: Languages? = Languages.KOTLIN
 )
