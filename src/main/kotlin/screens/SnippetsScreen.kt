@@ -15,7 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import deskit.dialogs.file.FileSaverDialog
+import deskit.dialogs.file.filesaver.FileSaverDialog
 import moe.tlaster.precompose.navigation.Navigator
 import screens.ExpandedSnippet
 
