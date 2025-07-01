@@ -10,7 +10,7 @@ plugins {
     alias(libs.plugins.hotReload)
 }
 
-val appPackageVersion = "1.0.0"
+val appPackageVersion = "1.0.1"
 group = "kached"
 version = appPackageVersion
 
@@ -153,10 +153,10 @@ tasks.register("addStartupWMClassToDebDynamic") {
 
     doLast {
         val debRoot = file("build/compose/binaries")
-        if (!debRoot.exists()) throw GradleException("❌ Folder not found: ${debRoot}")
+        if (!debRoot.exists()) throw GradleException("❌ Folder not found: $debRoot")
 
         val allDebs = debRoot.walkTopDown().filter { it.isFile && it.extension == "deb" }.toList()
-        if (allDebs.isEmpty()) throw GradleException("❌ No .deb files found under ${debRoot}")
+        if (allDebs.isEmpty()) throw GradleException("❌ No .deb files found under $debRoot")
 
         // picking the latest .deb file
         val originalDeb = allDebs.maxByOrNull { it.lastModified() }!!
@@ -175,7 +175,7 @@ tasks.register("addStartupWMClassToDebDynamic") {
 
         // Step 2: Modifying the desktop entry file
         val desktopFile = File(workDir, desktopRelativePath)
-        if (!desktopFile.exists()) throw GradleException("❌ .desktop file not found: ${desktopRelativePath}")
+        if (!desktopFile.exists()) throw GradleException("❌ .desktop file not found: $desktopRelativePath")
 
         val lines = desktopFile.readLines().toMutableList()
 
